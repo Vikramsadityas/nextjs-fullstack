@@ -52,25 +52,25 @@ export const authOption:NextAuthOptions={
     },
     secret:process.env.NEXT_AUTH_SECRET,
     callbacks:{
+        async jwt({ token, user}) {
+          if (user) {
+              token._id = user._id?.toString();
+              token.isVerified = user.isVerified;
+              token.isAcceptingmessages = user.isAcceptingmessages;
+              token.username = user.username;
+            }
+            return token;
+      
+        },
         async session({ session, token }) {
-            if(token)
-            {
-                session.user._id=token._id
-                session.user.isVerified=token.isVerified
-                session.user.isAcceptingmessages=token.isAcceptingmessages
-                session.user.username=token.username
-            }
-            return session
-          },
-          async jwt({ token, user}) {
-            if(user)
-            {
-                token._id=user._id?.toString()
-                token.isVerified=user.isVerified
-                token.isAcceptingmessages=user.isAcceptingmessages
-                token.username=user.username
-            }
-            return token
+            if (token) {
+                session.user._id = token._id;
+                session.user.isVerified = token.isVerified;
+                session.user.isAcceptingmessages = token.isAcceptingmessages;
+                session.user.username = token.username;
+              }
+              return session;
+        
           }
         }
 }

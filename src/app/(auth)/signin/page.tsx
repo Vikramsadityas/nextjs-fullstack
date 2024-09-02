@@ -58,7 +58,7 @@ export default function SignInForm() {
         title: 'Login successful',
         description: "login success"
       });
-      router.replace('/(app)/dashboard');
+      router.replace('/');
     }
   };
 
