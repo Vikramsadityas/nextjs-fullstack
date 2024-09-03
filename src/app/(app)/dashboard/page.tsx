@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
-import { Message } from '@/model/Message.model';
+import { Message } from '@/model/User.model';
 import { acceptMessagesSchema } from '@/schemas/acceptMessagesSchema';
 import { ApiResponse } from '@/types/ApiResponse';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -35,12 +35,14 @@ function UserDashboard() {
 
   const { register, watch, setValue } = form;
   const acceptMessages = watch('acceptMessages');
-
+  console.log(acceptMessages," here3");
   const fetchAcceptMessages = useCallback(async () => {
     setIsSwitchLoading(true);
     try {
       const response = await axios.get<ApiResponse>('/api/acceptmessages');
-      setValue('acceptMessages', response.data.isAcceptingMessage);
+      setValue('acceptMessages',response.data.isAcceptingMessage);
+      console.log(response);
+      
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
@@ -179,7 +181,7 @@ function UserDashboard() {
       </Button>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {messages.length > 0 ? (
-          messages.map((message, index) => (
+          messages.map((message) => (
             <MessageCards
               key={message._id as string}
               message={message}

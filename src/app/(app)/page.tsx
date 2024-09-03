@@ -12,9 +12,13 @@ import {
 } from '@/components/ui/carousel';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { User } from '@/model/User.model';
 
 const Home = () => {
   const router=useRouter()
+  const {data:session}=useSession()
+  const user:User=session?.user as User
   return (
     <>
     <main className="flex-grow flex flex-col items-center justify-center px-4 md:px-24 py-12 bg-gray-800 text-white">
@@ -52,7 +56,8 @@ const Home = () => {
       ))}
     </CarouselContent>
   </Carousel>
-  <Button onClick={(e)=>router.replace("/dashboard")}>View Dashboard</Button>
+  {session?(<Button onClick={(e)=>router.replace("/dashboard")}>View Dashboard</Button>):(<p className='border-red-200 border-2 p-2 text-center cursor-pointer' onClick={(e)=>router.replace('/signin')}>Please Login to access Dashboard</p>)}
+  
 </main>
 
 {/* Footer */}

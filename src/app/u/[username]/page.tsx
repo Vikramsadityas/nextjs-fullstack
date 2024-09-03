@@ -33,7 +33,7 @@ export default function page(){
             const axiosError=error as AxiosError<ApiResponse>;
             let errorMessage=axiosError.response?.data.message; 
             toast({
-                title:"Verification Failed",
+                title:"Message not sent",
                 description:errorMessage,
                 variant:"destructive"
             })
