@@ -15,8 +15,24 @@ export default function page(){
     const {toast}=useToast()
     const form=useForm<z.infer<typeof messageSchema>>({
         resolver:zodResolver(messageSchema),
-        
       })
+      const { setValue } = form;
+    const suggestMessage=async()=>{
+        try {
+                // setValue("content"," ")
+                const response=await axios.get("/api/suggestmessages")
+                setValue("content",response.data)
+        } catch (error) {
+            console.error("Error Verification")
+            const axiosError=error as AxiosError<ApiResponse>;
+            let errorMessage=axiosError.response?.data.message; 
+            toast({
+                title:"Suggest message not working",
+                description:errorMessage,
+                variant:"destructive"
+            })
+        }
+    }
     const onSubmit=async(data:z.infer<typeof messageSchema>)=>{
         try {
             const response=await axios.post('/api/sendMessage',{
@@ -57,15 +73,18 @@ export default function page(){
                             <FormItem>
                                 <FormLabel>Enter your feedback </FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Input  {...field} />
                                 </FormControl>
                             <FormMessage />
                             </FormItem>
                         )}
                         />
-                        <Button type="submit">Submit</Button>
+                        <div className="flex justify-between ">
+                            <Button type="submit">Submit</Button>
+                        </div>
                     </form>
                 </Form>
+                <Button onClick={(e)=>suggestMessage()}>Suggest Message</Button>
             </div>
         </div>
   )

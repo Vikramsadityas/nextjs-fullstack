@@ -33,7 +33,6 @@ export default function VerifyAccount(){
                 router.replace('/signin')
             }
         } catch (error) {
-            console.error("Error Verifi")
             const axiosError=error as AxiosError<ApiResponse>;
             let errorMessage=axiosError.response?.data.message; 
             toast({

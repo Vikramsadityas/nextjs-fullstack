@@ -19,7 +19,6 @@ export async function POST(request:Request){
     }
     const userId=user._id
     const {acceptMessages}=await request.json()
-    console.log(acceptMessages, " Messages");
     try {
         const updatedUser=await UserModel.findByIdAndUpdate(
             userId,
@@ -27,7 +26,6 @@ export async function POST(request:Request){
             
         )
         const value=await UserModel.findById(userId)
-        console.log(value?.isAcceptingMessages, " my");
         if(!updatedUser)
         {
             return Response.json({

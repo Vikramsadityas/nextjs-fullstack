@@ -16,7 +16,6 @@ export async function POST(request:Request){
                 status:400,
             })
         }
-        console.log(user.isAcceptingMessages," here2");
         if(!user.isAcceptingMessages)
         {
             return Response.json({
