@@ -10,7 +10,7 @@ import axios, { AxiosError } from "axios"
 import { useParams } from "next/navigation"
 import { useForm } from "react-hook-form"
 import *as z from 'zod'
-export default function page(){
+export default function Page(){
     const params=useParams<{username:string}>();
     const {toast}=useToast()
     const form=useForm<z.infer<typeof messageSchema>>({
