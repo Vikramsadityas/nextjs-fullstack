@@ -6,6 +6,25 @@ import UserModel from "@/model/User.model";
 export const authOption:NextAuthOptions={
     providers:[
         CredentialsProvider({
+            id:'Credentialsofguest',
+            name: 'Credentialsofguest',
+            credentials: {
+                username: { label: 'Username', type: 'text' },
+                password: { label: 'Password', type: 'password' },
+            },
+            authorize: async (credentials) => {
+                if (credentials?.username === 'guest' && credentials?.password === 'guest') {
+                    console.log("guest login")
+                    return {
+                        id: 'guest',
+                        username: 'Guest'+Math.floor(Math.random()),
+                        email: 'guest@example.com',
+                    };
+                }
+                return null;
+            },
+        }),
+        CredentialsProvider({
             id:"credentials",
             name:"Credentials",
             credentials: {

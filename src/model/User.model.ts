@@ -26,6 +26,7 @@ export interface User extends Document {
   isVerified: boolean;
   isAcceptingMessages: boolean;
   messages: Message[];
+  role:string;
 }
 
 // Updated User schema
@@ -62,7 +63,12 @@ const UserSchema: Schema<User> = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  messages: [MessageSchema],
+  role:{
+    required:false,
+    type:Schema.Types.String,
+    default:"User"
+  },
+  messages: [MessageSchema]
 });
 
 const UserModel =
